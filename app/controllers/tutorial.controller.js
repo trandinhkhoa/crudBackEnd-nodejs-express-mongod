@@ -22,6 +22,7 @@ exports.create = (req, res) => {
   tutorial
     .save(tutorial)
     .then(data => {
+      console.log("Received create");
       res.send(data);
     })
     .catch(err => {
@@ -38,6 +39,7 @@ exports.findAll = (req, res) => {
   var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
   Tutorial.find(condition)
     .then(data => {
+      console.log("Received findAll");
       res.send(data);
     })
     .catch(err => {
@@ -52,6 +54,7 @@ exports.findAll = (req, res) => {
 exports.findAllPublished = (req, res) => {
   Tutorial.find({ published: true })
     .then(data => {
+      console.log("Received findAllPublished");
       res.send(data);
     })
     .catch(err => {
@@ -67,6 +70,7 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
   Tutorial.findById(id)
     .then(data => {
+      console.log("Received findOne");
       if (!data)
         res.status(404).send({ message: "Not found Tutorial with id " + id });
       else res.send(data);
@@ -88,6 +92,7 @@ exports.update = (req, res) => {
   const id = req.params.id;
   Tutorial.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
+      console.log("Received update");
       if (!data) {
         res.status(404).send({
           message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found!`
@@ -106,6 +111,7 @@ exports.delete = (req, res) => {
   const id = req.params.id;
   Tutorial.findByIdAndRemove(id)
     .then(data => {
+      console.log("Received delete");
       if (!data) {
         res.status(404).send({
           message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
@@ -127,6 +133,7 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
   Tutorial.deleteMany({})
     .then(data => {
+      console.log("Received deleteAll");
       res.send({
         message: `${data.deletedCount} Tutorials were deleted successfully!`
       });
